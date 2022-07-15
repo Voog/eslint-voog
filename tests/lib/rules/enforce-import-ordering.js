@@ -57,6 +57,55 @@ const testSets = {
 
       options
     };
+  },
+
+  importsOnTop: () => {
+    const options = {
+      blockOrder: [],
+      blockMembershipTests: {},
+      checkImportsOnTop: true,
+      checkBlockSeparation: false
+    };
+
+    return {
+      valid: [
+        {
+          name: 'No other statement occurs before import declarations',
+          code: `
+            import 'A';
+            import 'B';
+
+            let x = 1;
+          `
+        },
+      ],
+
+      invalid: [
+        {
+          name: 'Another statement occurs before any import declarations',
+          code: `
+            let x = 1;
+
+            import 'A';
+            import 'B';
+          `,
+          errors: 1
+        },
+        {
+          name: 'Another statement occurs before the final import declaration',
+          code: `
+            import 'A';
+
+            let x = 1;
+
+            import 'B';
+          `,
+          errors: 1
+        },
+      ],
+
+      options
+    }
   }
 };
 
