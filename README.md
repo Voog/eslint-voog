@@ -50,7 +50,8 @@ Then configure the rules you want to use under the rules section.
           "foreign": "^\\w+$"
         },
         "ignore": "/utils/",
-        "importsOnTop": true
+        "checkImportsOnTop": true,
+        "checkBlockSeparation": false
       }
     ]
   }
@@ -94,12 +95,14 @@ You may choose to simply utilize the configuration we use internally at Voog:
 
 ### `enforce-import-ordering`
 
-A rule to enforce two conditions:
+A rule to enforce the following conditions:
 
-- Import declarations must appear before any other statements in a source file
-  (unless `importsOnTop` is explicitly set to false).
 - Import declarations must appear sorted into blocks defined by `blockOrder`
   and `blockMembershipTests`.
+- Import declaration blocks must be separated by at least two newlines (unless
+  `checkBlockSeparation` is explicitly set to false).
+- Import declarations must appear before any other statements in a source file
+  (unless `checkImportsOnTop` is explicitly set to false).
 
 #### Configuration
 
@@ -131,7 +134,12 @@ A rule to enforce two conditions:
    An array of regular expressions matched against the import source. Matching
    declarations are not classified and ignored.
 
-* `importsOnTop` _Boolean_
+* `checkBlockSeparation` _Boolean_
+
+   If true, enforce the requirement that import declaration blocks must be
+   separated by at least two newlines.
+
+* `checkImportsOnTop` _Boolean_
 
    If true, enforce the requirement that every import declaration must appear
    before any other statement in the file. Defaults to true.
