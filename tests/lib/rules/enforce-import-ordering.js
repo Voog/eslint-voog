@@ -9,8 +9,8 @@ const testSets = {
     const options = {
       blockOrder: ['A', 'B'],
       blockMembershipTests: {
-        A: '^A+$',
-        B: '^B+$'
+        A: '^A+',
+        B: '^B+'
       },
       checkBlockSeparation: false
     };
@@ -29,7 +29,7 @@ const testSets = {
           `
         },
         {
-          name: 'Imports are in order, with ignored declarations',
+          name: 'Imports are in order, with implicitly ignored declarations',
           code: `
             import 'ignored';
             import 'AA';
@@ -41,6 +41,18 @@ const testSets = {
             import 'BB';
             import 'ignored';
           `
+        },
+        {
+          name: 'Explicitly ignored declarations are excluded from ordering enforcement',
+          code: `
+            import 'A';
+            import 'AA';
+            import 'AAA';
+            import 'B';
+            import 'AAA_ignored';
+            import 'BBB';
+          `,
+          options: {...options, ignore: ['AAA_ignored']}
         },
       ],
 
@@ -207,7 +219,7 @@ const testSets = {
 };
 
 const attachOptions = (tests, options) =>
-  options ? tests.map(test => (test.options ? test : {...test, options: [options]})) : tests
+  options ? tests.map(test => ({...test, options: [test.options || options]})) : tests
 
 const compileTests = () => {
 
