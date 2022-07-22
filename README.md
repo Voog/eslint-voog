@@ -53,7 +53,8 @@ Then configure the rules you want to use under the rules section.
         "checkImportsOnTop": true,
         "checkBlockSeparation": false
       }
-    ]
+    ],
+    "voog/let-const-on-top": ["error"]
   }
 }
 ```
@@ -143,3 +144,9 @@ A rule to enforce the following conditions:
 
    If true, enforce the requirement that every import declaration must appear
    before any other statement in the file. Defaults to true.
+
+### `let-const-on-top`
+
+Require let and const declarations at the top of their containing scope. This
+rule is currently not configurable.
+
