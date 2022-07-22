@@ -106,6 +106,103 @@ const testSets = {
 
       options
     }
+  },
+
+  blocksSeparated: () => {
+    const options = {
+      blockOrder: ['A', 'B'],
+      blockMembershipTests: {
+        A: '^A+$',
+        B: '^B+$'
+      },
+      checkBlockSeparation: true,
+      checkImportsOnTop: false
+    };
+
+    return {
+      valid: [
+        {
+          name: 'Import blocks are separated by two newlines',
+          code: `
+            import 'A';
+            import 'AA';
+
+            import 'B';
+            import 'BB';
+          `
+        },
+        {
+          name: 'Import blocks are separated by more newlines',
+          code: `
+            import 'A';
+            import 'AA';
+
+
+            import 'B';
+            import 'BB';
+          `
+        },
+        {
+          name: 'Import blocks are separated by two newlines, with empty lines within a block',
+          code: `
+            import 'A';
+            import 'AA';
+
+            import 'B';
+
+            import 'BB';
+          `
+        },
+        {
+          name: 'Import blocks are separated by newlines, a comment and a statement',
+          code: `
+            import 'A';
+            import 'AA';
+
+            // Lorem ipsum
+
+            let x = 1;
+
+            import 'B';
+            import 'BB';
+          `
+        },
+        {
+          name: 'Ignored declarations are not taken into account for separation enforcement',
+          code: `
+            import 'A';
+            import 'ignored';
+            import 'AA';
+            import 'ignored';
+
+            import 'ignored';
+            import 'B';
+            import 'ignored';
+            import 'BB';
+          `
+        }
+      ],
+
+      invalid: [
+        {
+          name: 'Import blocks are separated by no newlines',
+          code: `
+            import 'A'; import 'B';
+          `,
+          errors: 1
+        },
+        {
+          name: 'Import blocks are separated by one newline',
+          code: `
+            import 'A';
+            import 'B';
+          `,
+          errors: 1
+        }
+      ],
+
+      options
+    }
   }
 };
 

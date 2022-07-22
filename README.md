@@ -143,8 +143,3 @@ A rule to enforce the following conditions:
 
    If true, enforce the requirement that every import declaration must appear
    before any other statement in the file. Defaults to true.
-
-## Known limitations
-
-* Unit tests are TODO.
-
