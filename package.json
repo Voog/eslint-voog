@@ -1,13 +1,14 @@
 {
   "name": "eslint-plugin-voog",
-  "version": "0.1",
-  "description": "Voog-specific ESLint rules",
+  "version": "0.1.0",
+  "description": "A collection of ESLint rules for import declaration ordering and more",
   "keywords": [
     "eslint",
     "eslintplugin",
     "eslint-plugin"
   ],
   "author": "Tambet Arak",
+  "homepage": "https://github.com/Voog/eslint-voog",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -29,5 +30,5 @@
   "peerDependencies": {
     "eslint": ">=6"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
