@@ -50,7 +50,7 @@ const testSets = {
             import 'AAA_ignored';
             import 'BBB';
           `,
-          options: {...options, ignore: ['AAA_ignored']}
+          options: [{...options, ignore: ['AAA_ignored']}]
         },
       ],
 
@@ -65,7 +65,7 @@ const testSets = {
         },
       ],
 
-      options
+      options: [options]
     };
   },
 
@@ -114,7 +114,7 @@ const testSets = {
         },
       ],
 
-      options
+      options: [options]
     }
   },
 
@@ -211,7 +211,7 @@ const testSets = {
         }
       ],
 
-      options
+      options: [options]
     }
   }
 };
