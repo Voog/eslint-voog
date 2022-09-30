@@ -1,5 +1,6 @@
 
 const RuleTester = require('eslint').RuleTester;
+const babelParserPath = require.resolve('@babel/eslint-parser');
 
 const attachOptions = (tests, key, value) =>
   value ? tests.map(test => ({...test, [key]: test[key] || value})) : tests
@@ -14,8 +15,7 @@ const propagateOptions = (testSet, keys) => {
   return testSet;
 }
 
-const getRuleTester = () =>
-  new RuleTester({parserOptions: {ecmaVersion: 2022, sourceType: 'module'}});
+const getRuleTester = () => new RuleTester({parser: babelParserPath});
 
 const compileTests = testSets => {
 
