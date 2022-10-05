@@ -54,7 +54,8 @@ Then configure the rules you want to use under the rules section.
         "checkBlockSeparation": false
       }
     ],
-    "voog/let-const-on-top": ["error"]
+    "voog/let-const-on-top": ["error"],
+    "voog/reexporting-index-modules": ["error"]
   }
 }
 ```
@@ -149,4 +150,11 @@ A rule to enforce the following conditions:
 
 Require let and const declarations at the top of their containing scope. This
 rule is currently not configurable.
+
+### `reexporting-index-modules`
+
+Detect React index modules matching the regular expression
+`[A-Z]\w+/index\.js$` and only allow these to only contain import declarations
+importing from its containing directory and export declarations re-exporting
+previously imported symbols.
 

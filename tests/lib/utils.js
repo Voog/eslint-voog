@@ -1,30 +1,40 @@
 
 const RuleTester = require('eslint').RuleTester;
+const babelParserPath = require.resolve('@babel/eslint-parser');
 
-const attachOptions = (tests, options) =>
-  options ? tests.map(test => ({...test, options: [test.options || options]})) : tests
+const attachOptions = (tests, key, value) =>
+  value ? tests.map(test => ({...test, [key]: test[key] || value})) : tests
 
-const getRuleTester = () =>
-  new RuleTester({parserOptions: {ecmaVersion: 2022, sourceType: 'module'}});
+const propagateOptions = (testSet, keys) => {
+  keys.forEach(key => {
+    ['valid', 'invalid'].forEach(block => {
+      testSet[block] = attachOptions(testSet[block], key, testSet[key]);
+    });
+  });
+
+  return testSet;
+}
+
+const getRuleTester = () => new RuleTester({parser: babelParserPath});
 
 const compileTests = testSets => {
 
   // Compile the expected tests structure from the internal hierarchical test
   // sets structure. The latter is an object whose every value is a function
-  // returning a test set containing `valid` and `invalid` test cases, and:
+  // returning a test set containing `valid` and `invalid` test cases, and
+  // the optional `options` and `filename` properties which are propagated
+  // down to each test case, unless the test case defines its own property of
+  // the same name. See:
   //
-  // - options - common options applied to each test case, unless the test
-  //   case has its own `options`
+  // https://eslint.org/docs/latest/developer-guide/nodejs-api#ruletester
 
   return Object.values(testSets).reduce(
     (acc, makeTestSet) => {
-      const testSet = makeTestSet();
-      const valid = attachOptions(testSet.valid, testSet.options);
-      const invalid = attachOptions(testSet.invalid, testSet.options);
+      const testSet = propagateOptions(makeTestSet(), ['options', 'filename']);
 
       return {
-        valid: [...acc.valid, ...valid],
-        invalid: [...acc.invalid, ...invalid]
+        valid: [...acc.valid, ...testSet.valid],
+        invalid: [...acc.invalid, ...testSet.invalid]
       };
     },
     {valid: [], invalid: []}

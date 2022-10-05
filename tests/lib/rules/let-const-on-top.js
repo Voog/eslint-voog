@@ -34,7 +34,7 @@ const testSets = {
           `
         },
         {
-          name: 'program scope is ignored',
+          name: 'Program scope is ignored',
           code: `
             let x;
             const y = 0xDECAFBAD;
