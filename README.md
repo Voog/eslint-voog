@@ -158,3 +158,16 @@ Detect React index modules matching the regular expression
 importing from its containing directory and export declarations re-exporting
 previously imported symbols.
 
+## Debugging
+
+`eslint-plugin-voog` uses the [`debug`](https://www.npmjs.com/package/debug)
+package for debugging. To turn on debugging for a specific rule, set the `DEBUG`
+environment variable to `eslint-plugin-voog:<rule>`. To turn on debugging
+globally for the plugin, set `DEBUG` to `eslint-plugin-voog:*`:
+
+```
+$ DEBUG=eslint-plugin-voog:enforce-import-ordering
+$ npx eslint
+$ DEBUG='eslint-plugin-voog:*'
+$ npx eslint
+```
