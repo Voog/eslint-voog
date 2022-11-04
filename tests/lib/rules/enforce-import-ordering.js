@@ -1,6 +1,7 @@
 const {compileTests, getRuleTester} = require('../utils.js');
 
-const rule = require('../../../lib/rules/enforce-import-ordering');
+const defaultConfig = require('../../../lib').configs.voog.rules['voog/enforce-import-ordering'][1];
+const rule = require('../../../lib/rules/enforce-import-ordering')
 
 const testSets = {
   ordering: () => {
@@ -213,7 +214,26 @@ const testSets = {
 
       options: [options]
     }
-  }
+  },
+
+  defaultConfig: () => {
+    return {
+      valid: [],
+
+      invalid: [
+        {
+          name: 'Default config: actions and action utils are considered separate blocks',
+          code: `
+            import {action} from 'path/actions';
+            import {actionUtil} from 'path/actions/utils';
+          `,
+          errors: 1
+        }
+      ],
+
+      options: [defaultConfig]
+    }
+  },
 };
 
 getRuleTester().run('enforce-import-ordering', rule, compileTests(testSets));
