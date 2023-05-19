@@ -216,6 +216,44 @@ const testSets = {
     }
   },
 
+  constantNamedTest: () => {
+    const options = {
+      blockOrder: ['constant', 'any'],
+      blockMembershipTests: {
+        constant: {namedTest: 'constant'},
+        any: ''
+      },
+      checkBlockSeparation: true
+    };
+
+    return {
+      valid: [
+        {
+          name: 'All declarations with only constant imports match the constant named test',
+          code: `
+            import CONSTANT_A from 'path';
+            import {CONSTANT_B} from 'path';
+            import CONSTANT_C, {CONSTANT_D} from 'path';
+            import {CONSTANT_E, CONSTANT_F} from 'path';
+          `
+        }
+      ],
+
+      invalid: [
+        {
+          name: 'Declarations with some non-constant imports do not match the constant named test',
+          code: `
+            import CONSTANT_A from 'path';
+            import Class, {CONSTANT_B} from 'path';
+          `,
+          errors: [{message: /must be separated/}]
+        }
+      ],
+
+      options: [options]
+    };
+  },
+
   defaultConfig: () => {
     return {
       valid: [],
