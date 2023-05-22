@@ -122,8 +122,8 @@ A rule to enforce the following conditions:
   Named tests are invoked by a structure `{"namedTest": <classifier>}` where
   `<classifier>` is a string referring to a built-in import declaration
   classifier.  Currently the only supported classifier is `constant` which
-  matches if at least one of the imported symbols consists solely of uppercase
-  characters or underscores and begins with an uppercase character. Note that:
+  matches if all of the imported symbols consist solely of uppercase characters
+  or underscores and begin with an uppercase character. Note that:
 
   * Every `blockOrder` member is required to have a corresponding entry in
     `blockMembershipTests`.
